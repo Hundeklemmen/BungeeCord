@@ -330,18 +330,6 @@ public class DownstreamBridge extends PacketHandler
                     con.connect( server, ServerConnectEvent.Reason.PLUGIN_MESSAGE );
                 }
             }
-            if ( subChannel.equals( "ConnectOther" ) )
-            {
-                ProxiedPlayer player = bungee.getPlayer( in.readUTF() );
-                if ( player != null )
-                {
-                    ServerInfo server = bungee.getServerInfo( in.readUTF() );
-                    if ( server != null )
-                    {
-                        player.connect( server );
-                    }
-                }
-            }
             if ( subChannel.equals( "IP" ) )
             {
                 out.writeUTF( "IP" );
@@ -426,26 +414,6 @@ public class DownstreamBridge extends PacketHandler
                     out.writeUTF( "UUIDOther" );
                     out.writeUTF( player.getName() );
                     out.writeUTF( player.getUUID() );
-                }
-            }
-            if ( subChannel.equals( "ServerIP" ) )
-            {
-                ServerInfo info = bungee.getServerInfo( in.readUTF() );
-                if ( info != null )
-                {
-                    out.writeUTF( "ServerIP" );
-                    out.writeUTF( info.getName() );
-                    out.writeUTF( info.getAddress().getAddress().getHostAddress() );
-                    out.writeShort( info.getAddress().getPort() );
-                }
-            }
-            if ( subChannel.equals( "KickPlayer" ) )
-            {
-                ProxiedPlayer player = bungee.getPlayer( in.readUTF() );
-                if ( player != null )
-                {
-                    String kickReason = in.readUTF();
-                    player.disconnect( new TextComponent( kickReason ) );
                 }
             }
 
